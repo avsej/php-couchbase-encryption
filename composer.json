@@ -2,7 +2,7 @@
     "name": "couchbase/couchbase-encryption",
     "description": "Field Encryption API for PHP",
     "type": "library",
-    "license": "ASL-2",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Sergey Avseyev",
