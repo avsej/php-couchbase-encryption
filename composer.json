@@ -1,0 +1,17 @@
+{
+    "name": "couchbase/couchbase-encryption",
+    "description": "Field Encryption API for PHP",
+    "type": "library",
+    "license": "ASL-2",
+    "authors": [
+        {
+            "name": "Sergey Avseyev",
+            "email": "sergey@couchbase.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^5.6||^7.0",
+        "ext-couchbase": ">=2.4.5"
+    }
+}
