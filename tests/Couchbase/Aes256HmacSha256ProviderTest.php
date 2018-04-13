@@ -9,8 +9,6 @@ use Couchbase\Bucket;
 
 use PHPUnit_Framework_TestCase;
 
-// phpcs:disable PEAR.Commenting
-
 final class InsecureKeyProvider implements KeyProvider
 {
     public function getKey(int $type, string $id)
