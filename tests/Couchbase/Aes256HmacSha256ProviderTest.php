@@ -40,11 +40,6 @@ final class Aes256HmacSha256ProviderTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    protected function tearDown()
-    {
-        // $this->bucket->unregisterCryptoProvider('AES-256-HMAC-SHA256');
-    }
-
     protected function storeEncrypted(string $id, $payload, array $options)
     {
         $document = ['message' => $payload];

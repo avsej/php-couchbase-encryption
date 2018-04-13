@@ -24,7 +24,8 @@
             "Couchbase\\": "./src/Couchbase/"
         },
         "files": [
-            "./src/Couchbase/Aes256HmacSha256Provider.php"
+            "./src/Couchbase/Aes256HmacSha256Provider.php",
+            "./src/Couchbase/KeyProvider.php"
         ]
     },
     "autoload-dev": {
