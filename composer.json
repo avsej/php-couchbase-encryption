@@ -22,11 +22,7 @@
     "autoload": {
         "psr-4": {
             "Couchbase\\": "./src/Couchbase/"
-        },
-        "files": [
-            "./src/Couchbase/Aes256HmacSha256Provider.php",
-            "./src/Couchbase/KeyProvider.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
