@@ -2,7 +2,7 @@
     "name": "couchbase/couchbase-encryption",
     "description": "Field Encryption API for PHP",
     "type": "library",
-    "license": "Apache-2.0",
+    "license": "Couchbase ESLA",
     "authors": [
         {
             "name": "Sergey Avseyev",
@@ -12,7 +12,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7.0",
-        "ext-couchbase": ">=2.4.6",
+        "ext-couchbase": ">=2.5.0",
         "ext-openssl": ">0"
     },
     "require-dev": {
