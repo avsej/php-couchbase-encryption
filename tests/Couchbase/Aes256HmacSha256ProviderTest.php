@@ -17,7 +17,7 @@ use PHPUnit_Framework_TestCase;
 
 final class InsecureKeyProvider implements KeyProvider
 {
-    public function getKey(int $type, string $id)
+    public function getKey(string $id)
     {
         switch ($id) {
             case 'mypublickey':
@@ -42,22 +42,22 @@ final class Aes256HmacSha256ProviderTest extends PHPUnit_Framework_TestCase
         $this->bucket = $this->cluster->openBucket('default');
         $this->bucket->registerCryptoProvider(
             'AES-256-HMAC-SHA256',
-            new Aes256HmacSha256Provider(new InsecureKeyProvider(), "HMAC_KEY_ID")
+            new Aes256HmacSha256Provider(new InsecureKeyProvider(), 'mypublickey', "HMAC_KEY_ID")
         );
     }
 
     protected function storeEncrypted(string $id, $payload, array $options)
     {
         $document = ['message' => $payload];
-        $encrypted = $this->bucket->encryptDocument($document, $options);
+        $encrypted = $this->bucket->encryptFields($document, $options);
         $this->bucket->upsert($id, $encrypted);
     }
 
-    protected function getEncrypted(string $id)
+    protected function getEncrypted(string $id, array $options)
     {
         $encrypted = $this->bucket->get($id);
         $this->assertNotNull($encrypted->value, 'document should not be null');
-        $document = $this->bucket->decryptDocument($encrypted->value);
+        $document = $this->bucket->decryptFields($encrypted->value, $options);
         $this->assertArrayHasKey('message', $document);
         return $document['message'];
     }
@@ -67,7 +67,6 @@ final class Aes256HmacSha256ProviderTest extends PHPUnit_Framework_TestCase
         $fieldOptions = [
             [
                 'name' => 'message',
-                'kid' => 'mypublickey',
                 'alg' => 'AES-256-HMAC-SHA256'
             ]
         ];
@@ -79,14 +78,14 @@ final class Aes256HmacSha256ProviderTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             'The old grey goose jumped over the wrickety gate.',
-            $this->getEncrypted('secret-1')
+            $this->getEncrypted('secret-1', $fieldOptions)
         );
 
         $this->storeEncrypted('secret-2', 10, $fieldOptions);
-        $this->assertEquals(10, $this->getEncrypted('secret-2'));
+        $this->assertEquals(10, $this->getEncrypted('secret-2', $fieldOptions));
 
         $this->storeEncrypted('secret-3', '10', $fieldOptions);
-        $this->assertEquals('10', $this->getEncrypted('secret-3'));
+        $this->assertEquals('10', $this->getEncrypted('secret-3', $fieldOptions));
 
         $this->storeEncrypted(
             'secret-4',
@@ -95,7 +94,7 @@ final class Aes256HmacSha256ProviderTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             ["The", "Old", "Grey","Goose", "Jumped", "over", "the", "wrickety", "gate"],
-            $this->getEncrypted('secret-4')
+            $this->getEncrypted('secret-4', $fieldOptions)
         );
 
         $this->storeEncrypted(
@@ -111,7 +110,7 @@ final class Aes256HmacSha256ProviderTest extends PHPUnit_Framework_TestCase
                'myValue' => 'The old grey goose jumped over the wrickety gate.',
                'myInt' => 10
             ],
-            $this->getEncrypted('secret-5')
+            $this->getEncrypted('secret-5', $fieldOptions)
         );
     }
 }
