@@ -10,6 +10,8 @@ namespace Couchbase;
 
 /**
  * Provides wrapper over openssl library for Couchbhase field encryption.
+ *
+ * Implements 'AES-256-HMAC-SHA256' cipher.
  */
 class Aes256HmacSha256Provider extends CryptoProvider
 {
