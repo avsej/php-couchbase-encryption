@@ -21,6 +21,11 @@ class Aes256HmacSha256Provider extends CryptoProvider
     private $keyProvider;
 
     /**
+     * @var string the key identifier for data encryption
+     */
+    private $keyId;
+
+    /**
      * @var string the key identifier for HMAC signature
      */
     private $hmacKeyId;
